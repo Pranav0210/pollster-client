@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Modal from './Modal'
+import Modal from '../Dashboard/Modal'
 import FormTemplate from '../../FormTemplate'
 
 const CreatePoll = () => {

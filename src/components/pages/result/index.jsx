@@ -19,9 +19,9 @@ function PollResultsPage() {
         console.log(`Socket error: ${error}`);
       });
 
-  socketResult.on('voteUpdate', (voteData) => {
-      if(voteData.pollId === pollId){
-        console.log('Received vote', voteData);
+  socketResult.on('result-change', (poll_id) => {
+      console.log('Received vote');
+      if(poll_id === pollId){
         fetchPollResults(pollId);
       }
   });
@@ -32,7 +32,7 @@ function PollResultsPage() {
     
     // Fetch total votes and comments from API
     fetchPollResults(pollId);
-  }, [pollId]);
+  }, voteData);
 
   const fetchPollData = async (pollId) => {
     // Fetch poll data from API using pollId
