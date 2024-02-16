@@ -1,36 +1,44 @@
-import { useState, navigate,} from "react";
+import { useState } from "react";
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [rePassword, setRePassword] = useState('');
 
   const handleSubmit = async e => {
     e.preventDefault();
-    const result = await (await fetch('http://localhost:8080/register', {
-      method: 'POST',
+
+    if(password !== rePassword){
+      
+    }
+    const response = await axios.post('http://13.233.172.140:8080/api/v1/auth/register', {
+      email: email,
+      password: password,
+    }, {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
-    })).json();
-    if (!result.error) {
-      console.log(result.message);
-      navigate('/');
+    });
+    if (response.data) {
+      console.log(response.data);
+      navigate('/login');
     } else {
-      console.log(result.error);
+      console.log(response.error);
     }
   };
 
   const handleChange = e => {
     if (e.currentTarget.name === 'email') {
       setEmail(e.currentTarget.value);
-    } else {
+    } else if (e.currentTarget.name === 'password') {
       setPassword(e.currentTarget.value);
+    }
+    else{
+      setRePassword(e.currentTarget.value)
     }
   };
   return (
@@ -40,11 +48,11 @@ const Signup = () => {
             <section className='flex flex-col place-items-center'>
                 <input 
                 className='rounded-md border-2 border-solid border-slate-100 drop-shadow-lg p-4 w-full my-2 focus:outline-none' 
-                type="text" name="question" id="question" placeholder='Email' onChange={handleChange}/>
+                type="text" name="email" id="question" placeholder='Email' onChange={handleChange}/>
                 <input className='rounded-md border-2 border-solid border-slate-100 drop-shadow-lg p-4 w-full my-2 focus:outline-none' 
-                type="password" name="option1" id="pass" placeholder='Password' onChange={handleChange}/>
+                type="password" name="password" id="pass" placeholder='Password' onChange={handleChange}/>
                 <input className='rounded-md border-2 border-solid border-slate-100 drop-shadow-lg p-4 w-full my-2 focus:outline-none' 
-                type="password" name="option1" id="conf-pass" placeholder=' Confirm Password' onChange={handleChange}/>
+                type="password" name="re-password" id="conf-pass" placeholder=' Confirm Password' onChange={handleChange}/>
                     <div className="rounded-md w-full mt-8 text-center bg-violet-500 text-white p-2 cursor-pointer">
                         <div className='px-4 py-1 text-lg' onClick={handleSubmit}>Sign Up</div>
                     </div>

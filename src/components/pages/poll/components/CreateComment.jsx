@@ -1,14 +1,32 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-function CreateComment({ onSubmit }) {
+function CreateComment({ pollId }) {
   const [text, setText] = useState('');
+  const [parentComment, setParentComment] = useState(null);
 
   const handleSubmit = () => {
     // Submit the comment data to the parent component
-    onSubmit(text);
+    async function postComment(){
+      await axios.post(`http://13.233.172.140:8080/api/v1/comments/poll/${pollId}`, {
+        text: text,
+        reply_to: parentComment
+      }, {
+          headers:{
+            'Authorization': `Bearer ${sessionStorage.getItem('accesstoken')}`,
+            'Content-Type': 'application/json',
+          },
+        })
+      
+    }
+    postComment()
     // Clear the input field after submitting
     setText('');
   };
+
+  const handleReply = (commentId) => {
+    setParentComment(commentId);
+  }
 
   return (
     <div className="mb-4">

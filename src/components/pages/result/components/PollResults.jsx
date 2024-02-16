@@ -35,10 +35,6 @@ function PollResults({ poll, voteData }) {
             {voteShareData.map((choice, index) => (
                 <div className={`cursor-pointer border-2 border-solid drop-shadow-md rounded-md my-4 flex flex-row p-4 text-white`} style={{backgroundColor:choice.color}}>{choice.choice}</div>
             ))}
-            {/* <div className={`cursor-pointer border-2 border-solid drop-shadow-md rounded-md my-4 flex flex-row p-4 text-white`} style={{backgroundColor:data[0].color}}>Visual Studio Code</div>
-            <div className={`cursor-pointer border-2 border-solid drop-shadow-md rounded-md my-4 flex flex-row p-4 text-white`} style={{backgroundColor:data[1].color}}>Visual Studio Code</div>
-            <div className={`cursor-pointer border-2 border-solid drop-shadow-md rounded-md my-4 flex flex-row p-4 text-white`} style={{backgroundColor:data[2].color}}>Visual Studio Code</div>
-            <div className={`cursor-pointer border-2 border-solid drop-shadow-md rounded-md my-4 flex flex-row p-4 text-white`} style={{backgroundColor:data[3].color}}>Visual Studio Code</div> */}
         </section>
             </div>
         <section className='flex justify-center place-items-center'>
@@ -60,40 +56,6 @@ function PollResults({ poll, voteData }) {
         </section>
       </div>
     </div>
-    {/* <div>
-      <h1 className="text-3xl font-bold mb-8">Poll Results</h1>
-      <div className="mb-8">
-        <h2 className="text-xl font-bold mb-4">{poll.topic}</h2>
-        <div className="list-disc pl-4">
-          {voteShareData.map(choice => (
-            <div className={`bg-${choice.color.slice(1)}`} key={choice._id}>{choice.choice}</div>
-          ))}
-        </div>
-        <p className="mt-4">
-          Creator: {poll.created_by}
-        </p>
-        <p>
-          Total Voters: {totalVotes}
-        </p>
-      </div>
-      
-      <div style={{ height: '300px', width:'300px' }}>
-        {console.log(voteShareData)}
-        <PieChart
-          data={voteShareData.map(entry => ({
-            title: entry.choice,
-            value: entry.votes,
-            color: entry.color
-          }))}
-          label={({ dataEntry }) => `(${(dataEntry.value / totalVotes * 100).toFixed(2)}%)`}
-          labelStyle={(index) => ({
-            fill: '#000000',
-            fontSize: '5px',
-            fontFamily: 'sans-serif',
-          })}
-        />
-      </div>
-    </div> */}
     </>
   );
 }

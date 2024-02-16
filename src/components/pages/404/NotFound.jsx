@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const NotFoundPage = () => {
     const navigate = useNavigate();
@@ -17,7 +17,9 @@ const NotFoundPage = () => {
           </div>
           <div className='flex justify-between px-8 py-4'>
             <button onClick={goBack} className='bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-400'>Go Back</button>
-            <button className='bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-400'>Home</button>
+            <Link to={'/'}>
+              <button className='bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 focus:outline-none focus:ring focus:ring-gray-400'>Home</button>
+            </Link>
           </div>
         </div>
       </div>

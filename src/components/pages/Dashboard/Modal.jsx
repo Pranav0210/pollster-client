@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
 
 const Modal = ({ setIsOpen }) => {
   const [question, setQuestion] = useState('');
@@ -25,9 +26,23 @@ const Modal = ({ setIsOpen }) => {
 
   const handleSubmit = () => {
     // Add logic to submit poll data
+    const newPoll = {
+      topic: question,
+      tag: 'General',
+      choices: options,
+    }
     console.log('Question:', question);
     console.log('Options:', options);
-    setIsOpen(false);
+    async function postData(){
+      await axios.post(`http://13.233.172.140:8080/api/v1/polls/`, newPoll, {
+          headers:{
+            'Authorization': `Bearer ${sessionStorage.getItem('accesstoken')}`,
+            'Content-Type': 'application/json',
+          },
+        })
+      setIsOpen(false);
+    }
+    postData()
   };
 
   return (
@@ -57,7 +72,7 @@ const Modal = ({ setIsOpen }) => {
                 value={option}
                 onChange={(e) => handleOptionChange(index, e.target.value)}
               />
-              {index > 2 && (
+              {index > 1 && (
                 <button 
                   className='absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-md' 
                   onClick={() => handleRemoveOption(index)}
@@ -67,20 +82,22 @@ const Modal = ({ setIsOpen }) => {
               )}
             </div>
           ))}
-          {options.length < 10 && (
+          <div className='flex flex-row justify-center place-items-center'>
+            {options.length < 5 && (
+              <button 
+                className='mt-4 bg-violet-500 text-white px-4 py-2 mr-4 rounded-md cursor-pointer' 
+                onClick={handleAddOption}
+              >
+                Add Option
+              </button>
+            )}
             <button 
-              className='bg-blue-500 text-white px-2 py-1 rounded-md' 
-              onClick={handleAddOption}
+              className='mt-4 bg-violet-500 text-white px-4 py-2 rounded-md cursor-pointer' 
+              onClick={handleSubmit}
             >
-              Add Option
+              Create
             </button>
-          )}
-          <button 
-            className='mt-4 bg-violet-500 text-white px-4 py-2 rounded-md cursor-pointer' 
-            onClick={handleSubmit}
-          >
-            Create
-          </button>
+          </div>
         </div>
       </div>
     </>
